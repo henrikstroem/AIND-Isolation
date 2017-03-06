@@ -38,7 +38,11 @@ def custom_score(game, player):
     """
 
     # TODO: finish this function!
-    raise NotImplementedError
+    #raise NotImplementedError
+    player_moves = len(game.get_legal_moves(player))
+    opponent_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    score = float(player_moves - 2 * opponent_moves)
+    return score
 
 
 class CustomPlayer:
@@ -123,6 +127,18 @@ class CustomPlayer:
         # Perform any required initializations, including selecting an initial
         # move from the game board (i.e., an opening book), or returning
         # immediately if there are no legal moves
+        
+        # Make intial move if no move has been made
+        if game.move_count == 0:
+            game.apply_move((1, 1)) # TODO: make better choice
+        
+        print()
+        print(game.print_board())
+        print()
+        
+        # If no legal moves, return (-1, -1)
+        if len(game.get_legal_moves()) < 1:
+            return (-1, -1)
 
         try:
             # The search method call (alpha beta or minimax) should happen in
